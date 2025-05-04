@@ -12,12 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            // $table->id();
+            // $table->string('name');
+            // $table->string('email')->unique();
+            // $table->timestamp('email_verified_at')->nullable();
+            // $table->string('password');
+            // $table->rememberToken();
+            // $table->timestamps();
+
+            $table->uuid('id')->primary();
+            $table->string('name', 255);
+            $table->string('email', 255)->unique();
+            $table->string('password', 255); //perlu encrypt kah? aku isi 255 dlu buat jaga" encrypt asilny varchar 20
+            $table->integer('money')->default(0);
+
+            $table->boolean('is_admin')->default(false);
+            $table->boolean('remember_me')->default(false);
             $table->timestamps();
         });
 
