@@ -64,7 +64,12 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
+
+        $user->remember_me = false;
+        $user->save();
+
         return response()->json(['message' => 'Logout successful'], 200);
     }
 }
