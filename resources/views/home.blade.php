@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Dashboard - Turu SweetShop</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-[#fff6da] min-h-screen flex flex-col">
-
-    <!-- Navbar -->
-    <nav class="bg-[#ffb64f] text-[#683100] font-bold px-8 py-4 flex justify-between items-center shadow-md">
-        <h1 class="text-2xl tracking-wide">🍰 Turu SweetShop</h1>
-        <div class="space-x-6">
-            <a href="#" class="hover:underline">Dashboard</a>
-            <a href="#" class="hover:underline">Produk</a>
-            <a href="#" class="hover:underline">Pesanan</a>
-            <a href="#" class="hover:underline text-red-600">Logout</a>
-        </div>
-    </nav>
-
+@extends('layout.menu')
+@section('konten')
     <!-- Carousel -->
     <div class="relative w-full max-w-5xl mx-auto mt-10 rounded-xl overflow-hidden shadow-lg">
         <div class="w-full h-64 bg-cover bg-center transition-all duration-500" style="background-image: url('{{ asset('images/kue1.jpg') }}');" id="carousel-image">
@@ -52,9 +34,5 @@
         @endfor
     </div>
 
-    <!-- Footer -->
-    <footer class="mt-16 bg-[#ffb64f] text-center text-[#683100] py-4 font-semibold">
-        &copy; 2025 Turu SweetShop. All rights reserved.
-    </footer>
-</body>
-</html>
+@endsection
+  
