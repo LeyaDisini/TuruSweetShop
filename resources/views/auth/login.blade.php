@@ -24,7 +24,7 @@
 
             <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
-
+            
                 <div>
                     <label for="email" class="block text-[#683100] font-semibold mb-2">Email</label>
                     <input
@@ -37,7 +37,7 @@
                         value="{{ old('email') }}"
                     />
                 </div>
-
+            
                 <div>
                     <label for="password" class="block text-[#683100] font-semibold mb-2">Password</label>
                     <input
@@ -49,7 +49,15 @@
                         class="w-full px-5 py-3 border border-[#ffb64f] rounded-xl focus:outline-none focus:ring-4 focus:ring-[#af5100] shadow-sm"
                     />
                 </div>
-
+            
+                <!-- Remember Me -->
+                <div class="flex items-center">
+                    <input type="checkbox" name="remember" id="remember" class="h-4 w-4 text-[#af5100] border-gray-300 rounded focus:ring-[#683100]">
+                    <label for="remember" class="ml-2 block text-sm text-[#683100] font-semibold">
+                        Remember Me
+                    </label>
+                </div>
+            
                 <button
                     type="submit"
                     class="w-full bg-[#af5100] hover:bg-[#683100] text-white font-bold py-3 rounded-xl transition duration-300"
@@ -57,6 +65,7 @@
                     Login
                 </button>
             </form>
+            
 
             <p class="mt-6 text-center text-[#683100] font-semibold">
                 Belum punya akun? 
