@@ -33,7 +33,7 @@ class LoginController extends Controller
 
         if ($user->is_admin) {
             // $token = $user->createToken('admin-token')->plainTextToken;
-            $token = $user->createToken('admin-token', ['*'], $remember ? now()->addMonths(1) : now()->addMinutes(60))->plainTextToken; //['*'] artinya bisa di create, edit, delete
+            $token = $user->createToken('admin-token', ['*'], $remember ? now()->addMonths(1) : null)->plainTextToken; //['*'] artinya bisa di create, edit, delete
             return response()->json([
                 'message' => 'Login successful',
                 'token' => $token,
@@ -49,7 +49,7 @@ class LoginController extends Controller
         
         else {
             // $token = $user->createToken('user-token')->plainTextToken;
-            $token = $user->createToken('user-token', ['*'], $remember ? now()->addMonths(1) : now()->addMinutes(60))->plainTextToken; //['*'] artinya bisa di create, edit, delete
+            $token = $user->createToken('user-token', ['*'], $remember ? now()->addMonths(1) : null)->plainTextToken; //['*'] artinya bisa di create, edit, delete
             return response()->json([
                 'message' => 'Login successful',
                 'token' => $token,
