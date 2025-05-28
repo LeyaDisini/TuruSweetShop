@@ -13,13 +13,17 @@ class LoginController extends Controller
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8',
             'remember_me' => 'nullable|in:true,false,1,0' // biar bisa test form-data di postman
+        ], [
+            'password.min' =>'Panjang password minimal 8 karakter.',
+            'password.regex' => 'Password harus mengandung minimal 1 huruf kapital dan 1 karakter spesial.',
+            'email.max' =>'Panjang email maksimal 255 karakter.',
         ]);
 
         $user = User::where('email', $validated['email'])->first();
 
         if(!$user || !Hash::check($validated['password'], $user->password)){
             return response()->json([
-                'message'=> 'Invalid User'
+                'message'=> 'Data Invalid. Pastikan password dan email nda benar.'
             ], 404);
         }
 
@@ -40,7 +44,6 @@ class LoginController extends Controller
                     'is_admin' => $user->is_admin,
                     'remember_me' => $user->remember_me
                 ],
-                // 'redirect' => ... (isi FE disini)
             ]);
         }
         
@@ -57,7 +60,6 @@ class LoginController extends Controller
                     'is_admin' => $user->is_admin,
                     'remember_me' => $user->remember_me
                 ],
-                // 'redirect' => ... (isi FE disini)
             ]);
         }
     }

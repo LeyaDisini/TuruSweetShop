@@ -22,7 +22,7 @@
         <div class="w-1/2 p-12 bg-[#fff6da] flex flex-col justify-center">
             <h2 class="text-4xl font-extrabold text-[#683100] mb-8 text-center">Login</h2>
 
-            <form method="POST" action="{{ route('login') }}" class="space-y-6">
+            <form id="login-form" class="space-y-6">
                 @csrf
             
                 <div>
@@ -75,5 +75,56 @@
             </p>
         </div>
     </div>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.querySelector('#email').value;
+            const password = document.querySelector('#password').value;
+            const remember = document.querySelector('#remember').checked;
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                email: email,
+                password: password,
+                remember: remember
+                })
+            })
+
+            .then(async (res) => {
+                const data = await res.json();
+
+                if (!res.ok) {
+                    if (data.errors) {
+                        const messages = Object.values(data.errors).flat().join('\n');
+                        alert(messages);
+                    } else {
+                        alert(data.message || 'Gagal register.');
+                    }
+                    return;
+                }
+
+                localStorage.setItem('token', data.token);
+                if(data.user.is_admin){
+                    window.location.href = '/admin';
+                }
+                else{
+                    window.location.href = '/home';
+                }         
+            })
+                
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Catch gagal.');
+            });
+        });
+    </script>
 </body>
 </html>

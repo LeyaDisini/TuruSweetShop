@@ -13,7 +13,7 @@
         <div class="w-full bg-gradient-to-b from-[#ffe6bf] to-[#ffb64f] p-10 flex flex-col justify-center space-y-6">
             <h2 class="text-4xl font-extrabold text-[#683100] mb-8 text-center">Register</h2>
 
-            <form method="POST" action="{{ route('register') }}" class="space-y-6">
+            <form id="register-form" class="space-y-6">
                 @csrf
 
                 <div class="flex gap-6">
@@ -65,6 +65,62 @@
             </p>
         </div>
     </div>
+    <script>
+        document.querySelector('#register-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.querySelector('#name').value.trim();
+            const email = document.querySelector('#email').value.trim();
+            const password = document.querySelector('#password').value;
+            const confirm = document.querySelector('#password_confirmation').value;
+
+            if (!name || !email || !password || !confirm) { //Validasi dari FE jaga"
+                alert('Semua field harus diisi.');
+                return;
+            }
+
+            if (password !== confirm) {
+                alert('Password dan konfirmasi tidak sama.');
+                return;
+            }
+
+            fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password,
+                    password_confirmation: confirm,
+                }),
+            })
+                .then(async (res) => {
+                    const data = await res.json();
+
+                    if (!res.ok) {
+                        if (data.errors) {
+                            const messages = Object.values(data.errors).flat().join('\n');
+                            alert(messages);
+                        } else {
+                            alert(data.message || 'Gagal register.');
+                        }
+                        return;
+                    }
+                    alert('Berhasil daftar! Silakan login.');
+                    window.location.href = '/login';
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert('Catch gagal');
+                });
+        });
+    </script>
+
+
 </body>
 
 </html>

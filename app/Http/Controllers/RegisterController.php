@@ -22,7 +22,15 @@ class RegisterController extends Controller
                 'regex:/[A-Z]/',                    // Huruf kapital
                 'regex:/[!@#$%^&*(),.?":{}|<>]/'    // Special char
             ],
+        ],[
+                'password.min' =>'Panjang password minimal 8 karakter.',
+                'password.regex' => 'Password harus mengandung minimal 1 huruf kapital dan 1 karakter spesial.',
+                'email.unique' =>'Email sudah terdaftar dalam database, silahkan login',
+                'email.max' =>'Panjang email maksimal 255 karakter.',
+                'name.max' => 'Panjang nama maksimal 255 karakter.'
         ]);
+
+        
 
         $user = User::create([
             'id' => Str::uuid(),
