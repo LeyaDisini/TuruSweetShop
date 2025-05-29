@@ -7,6 +7,8 @@ use App\Http\Requests\StoreProductsRequest;
 use App\Http\Requests\UpdateProductsRequest;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class ProductsController extends Controller
 {
@@ -68,18 +70,27 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Products $products)
+    public function edit(Products $product)
     {
-        //
+        return view('admin.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
 
-    public function update(UpdateProductsRequest $request, Products $product)
+    public function update(UpdateProductsRequest $request, /*Products $product*/ $id)
     {
+
+        $product = Products::find($id);
+        if (!$product) {
+            return response()->json(['message' => 'Product not found'], 404);
+        }
+        Log::info('Product DB check:', $product ? $product->toArray() : 'Not found');
         $data = $request->validated();
+
+        Log::info('Before update product:', ['product' => $product]);
+        Log::info('Data update:', $data);
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images', 'public');
@@ -94,6 +105,7 @@ class ProductsController extends Controller
 
         $updated = $product->update($data);
         $product->refresh();
+        Log::info('Update result:', ['updated' => $updated, 'product' => $product]);
 
         return response()->json([
             'message' => $updated ? 'Product updated successfully' : 'Update failed',

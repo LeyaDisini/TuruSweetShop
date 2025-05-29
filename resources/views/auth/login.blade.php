@@ -106,14 +106,14 @@
                         const messages = Object.values(data.errors).flat().join('\n');
                         alert(messages);
                     } else {
-                        alert(data.message || 'Gagal register.');
+                        alert(data.message || 'Gagal login.');
                     }
                     return;
                 }
 
                 localStorage.setItem('token', data.token);
                 if(data.user.is_admin){
-                    window.location.href = '/admin';
+                    window.location.href = '/admin/index';
                 }
                 else{
                     window.location.href = '/home';
