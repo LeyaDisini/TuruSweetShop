@@ -18,14 +18,22 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-Route::get('/admin/index', function () {
-    return view('admin.index');
-})->name('admin/index');
+Route::get('/menu', function () {
+    return view('products.index');
+})->name('menu');
 
-Route::get('/admin/tambah', function () {
-    return view('admin.tambah');
-})->name('admin/tambah');
+// Route::get('/admin/index', function () {
+//     return view('admin.index');
+// })->name('admin/index');
 
-Route::get('/admin/edit', function () {
-    return view('admin.edit');
-})->name('admin/edit');
+// Route::get('/admin/tambah', function () {
+//     return view('admin.tambah');
+// })->name('admin/tambah');
+
+// Route::get('/admin/edit', function () {
+//     return view('admin.edit');
+// })->name('admin/edit');
+
+// Route::get('/admin/detail', function () {
+//     return view('admin.detail');
+// })->name('admin/detail');
