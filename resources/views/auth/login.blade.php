@@ -9,7 +9,7 @@
     <div class="bg-white rounded-3xl shadow-lg overflow-hidden flex max-w-6xl w-full my-8">
         <!-- Kiri -->
         <div class="w-1/2 bg-gradient-to-b from-[#ffe6bf] to-[#ffb64f] p-10 flex flex-col items-center justify-center space-y-6">
-            <img src="{{ asset('images/turuu.png') }}" alt="Sweet Cake" class="w-72" />
+            <img src="{{ asset('/storage/images/turuu.png') }}" alt="Sweet Cake" class="w-72" />
             <h2 class="text-3xl font-extrabold text-[#683100] leading-snug text-center">
                 Turn your sweet into reality
             </h2>
@@ -75,32 +75,29 @@
             </p>
         </div>
     </div>
-
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
-
+    
             const email = document.querySelector('#email').value;
             const password = document.querySelector('#password').value;
-            const remember = document.querySelector('#remember').checked;
-
+            const remember_me = document.querySelector('#remember').checked;
+    
             fetch('/api/login', {
                 method: 'POST',
                 headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({
-                email: email,
-                password: password,
-                remember: remember
+                    email: email,
+                    password: password,
+                    remember_me: remember_me
                 })
             })
-
             .then(async (res) => {
                 const data = await res.json();
-
+    
                 if (!res.ok) {
                     if (data.errors) {
                         const messages = Object.values(data.errors).flat().join('\n');
@@ -110,21 +107,21 @@
                     }
                     return;
                 }
-
+    
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.user.is_admin ? 'admin' : 'user');
+    
                 if(data.user.is_admin){
                     window.location.href = '/admin/index';
-                }
-                else{
+                } else {
                     window.location.href = '/home';
-                }         
+                }
             })
-                
             .catch(error => {
                 console.error('Error:', error);
-                alert('Catch gagal.');
+                alert('Terjadi kesalahan saat login.');
             });
         });
     </script>
-</body>
+    </body>
 </html>

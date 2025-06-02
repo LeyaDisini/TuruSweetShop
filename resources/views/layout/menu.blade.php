@@ -11,7 +11,7 @@
 
     <!-- Navbar -->
     <nav class="bg-[#ffb64f] text-[#683100] font-bold px-8 py-4 flex items-center shadow-md relative">
-        <h1 class="text-2xl tracking-wide mr-6">🍰 Turu SweetShop</h1>
+        <a href="#" class="text-2xl tracking-wide mr-6 hover:underline">🍰 Turu SweetShop</a>
 
         <div class="absolute left-1/2 transform -translate-x-1/2 flex space-x-6" id="nav-links">
             <!-- Will be filled by JavaScript -->
@@ -33,39 +33,41 @@
     </footer>
 
     <script>
-        const token = localStorage.getItem('token');
-        const role = localStorage.getItem('role');
-        const authSection = document.getElementById('auth-section');
-        const navLinks = document.getElementById('nav-links');
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const role = localStorage.getItem('role');
+            const authSection = document.getElementById('auth-section');
+            const navLinks = document.getElementById('nav-links');
 
-        // Nav By Role
-        if (role === 'admin') {
-            navLinks.innerHTML = `
-                <a href="/dashboard" class="hover:underline">Dashboard</a>
-                <a href="/produk" class="hover:underline">Produk</a>
-                <a href="/pesanan" class="hover:underline">Pesanan</a>
-            `;
-        } else if (role === 'user') {
-            navLinks.innerHTML = `
-                <a href="/dashboard" class="hover:underline">Beranda</a>
-                <a href="/produk" class="hover:underline">Belanja</a>
-                <a href="/pesanan" class="hover:underline">Pesanan Saya</a>
-            `;
-        }
+            // Nav By Role
+            if (role === 'admin') {
+                navLinks.innerHTML = `
+                    <a href="/dashboard" class="hover:underline">Dashboard</a>
+                    <a href="/produk" class="hover:underline">Produk</a>
+                    <a href="/pesanan" class="hover:underline">Pesanan</a>
+                `;
+            } else if (role === 'user') {
+                navLinks.innerHTML = `
+        <a href="/home" class="hover:underline">Beranda</a>
+        <a href="/produk" class="hover:underline">Menu</a>
+        <a href="/pesanan" class="hover:underline">Pesanan Saya</a>
+    `;
+            }
 
-        //////////////
-        if (token && token !== 'null' && token !== '') {
-            authSection.innerHTML = `
-                <button onclick="logout()" class="hover:underline text-red-600">Logout</button>
-            `;
-        } else {
-            authSection.innerHTML = `
-                <a href="/login" class="hover:underline">Login</a>
-            `;
-        }
 
+            if (token && token !== 'null' && token !== '') {
+                authSection.innerHTML = `
+                    <button onclick="logout()" class="hover:underline text-red-600">Logout</button>
+                `;
+            } else {
+                authSection.innerHTML = `
+                    <a href="/login" class="hover:underline">Login</a>
+                `;
+            }
+        });
 
         function logout() {
+            const token = localStorage.getItem('token');
             fetch('http://127.0.0.1:8000/api/logout', {
                     method: 'POST',
                     headers: {
@@ -93,6 +95,7 @@
                 });
         }
     </script>
+    @stack('scripts')
 </body>
 
 </html>

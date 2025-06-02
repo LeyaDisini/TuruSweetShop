@@ -29,7 +29,7 @@
                 products.forEach(product => {
                     html += `
                     <div class="bg-white p-5 rounded-xl shadow">
-                        <img src="/${product.image}" class="w-full h-40 object-cover rounded-lg mb-4">
+                        <img src="/${product.image}" class="w-full h-45 object-cover rounded-lg mb-4">
                         <h3 class="text-[#683100] text-xl font-bold">${product.name}</h3>
                         <p class="text-[#af5100]">${product.desc}</p>
                         <p class="text-sm text-gray-500">Stock: ${product.stock}</p>
