@@ -2,16 +2,16 @@
 @section('konten')
     <!-- Carousel -->
     <div class="relative w-full max-w-5xl mx-auto mt-10 rounded-xl overflow-hidden shadow-lg">
-        <div class="w-full h-64 bg-cover bg-center transition-all duration-500"
-            style="background-image: url('{{ asset('images/kue1.jpg') }}');" id="carousel-image"></div>
+        <div class="w-full h-80 bg-cover bg-center transition-all duration-500"
+            style="background-image: url('{{ asset('image/Banner1.png') }}');" id="carousel-image"></div>
     </div>
 
     <script>
         const images = [
-            "{{ asset('images/kue1.jpg') }}",
-            "{{ asset('images/kue2.jpg') }}",
-            "{{ asset('images/kue3.jpg') }}"
+            "{{ asset('image/Banner1.png') }}",
+            "{{ asset('image/Banner2.png') }}"
         ];
+
         let index = 0;
         setInterval(() => {
             index = (index + 1) % images.length;
