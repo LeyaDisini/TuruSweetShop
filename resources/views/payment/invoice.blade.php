@@ -1,7 +1,7 @@
 @extends('layout.menu')
 @section('konten')
    
-    <div class="min-h-screen bg-[#fffaf5] py-10 px-4">
+    <div class="min-h-screen  py-10 px-4">
         <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-md">
             <h2 class="text-2xl md:text-3xl font-bold text-[#683100] mb-6 border-b pb-2">Invoice Pembelian</h2>
 
