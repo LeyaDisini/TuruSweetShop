@@ -42,15 +42,10 @@
             // Nav By Role
             if (role === 'admin') {
                 navLinks.innerHTML = `
-                    <a href="/dashboard" class="hover:underline">Dashboard</a>
-                    <a href="/produk" class="hover:underline">Produk</a>
-                    <a href="/pesanan" class="hover:underline">Pesanan</a>
+                    
                 `;
             } else if (role === 'user') {
                 navLinks.innerHTML = `
-        <a href="/home" class="hover:underline">Beranda</a>
-        <a href="/produk" class="hover:underline">Menu</a>
-        <a href="/pesanan" class="hover:underline">Pesanan Saya</a>
     `;
             }
 
