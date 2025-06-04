@@ -137,6 +137,16 @@
                         }
                         html += `<tr><td colspan="3" class="text-right font-bold py-3">Total:</td><td class="font-bold py-3">Rp ${formatRupiah(total)}</td><td></td></tr>`;
                         html += '</tbody></table>';
+                        html += `
+                            <div class="mt-4 text-right">
+                                <button 
+                                    onclick="checkLoginAndRedirect()" 
+                                    class="bg-[#af5100] hover:bg-[#683100] text-white font-bold py-2 px-6 rounded transition duration-300"
+                                >
+                                    Bayar
+                                </button>
+                            </div>
+                        `;
                         document.getElementById('cartContent').innerHTML = html;
                     } else {
                         document.getElementById('cartContent').innerHTML = '<p>Keranjang kosong.</p>';
@@ -145,6 +155,16 @@
                 .catch(() => {
                     document.getElementById('cartContent').innerHTML = '<p>Gagal memuat keranjang.</p>';
                 });
+        }
+
+        function checkLoginAndRedirect(){
+            if(localStorage.getItem('token')!== null){
+                window.location.href = '/invoice';
+            }
+            else{
+                alert('Mohon Login sebelum melanjutkan proses pembayaran.')
+                window.location.href = '/login';
+            }
         }
 
         function updateQuantity(productId, quantity) {

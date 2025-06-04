@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Products;
+use Illuminate\Support\Facades\Auth;
 
 class Ccart extends Controller
 {
@@ -99,5 +100,41 @@ class Ccart extends Controller
     {
         $cart = session()->get('cart', []);
         return response()->json(['success' => true, 'cart' => $cart]);
+    }
+
+    public function showInvoice()
+    {
+        $cart = session()->get('cart', []);
+        return view('payment.invoice', compact('cart'));
+    }
+
+    public function checkout()
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'not_logged_in',
+                'message' => 'Silakan login terlebih dahulu.'
+            ], 401);
+        }
+
+        //Pake ini klo udh integrasi sm FE (ambil total dr cart base on session) -> gamungkin bisa ngeluarin JSON skalopun dana mencukupi
+        $cart = session('cart', []);
+        $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']);
+
+        if ($user->money < $total) {
+            return response()->json([
+                'status' => 'topup_required',
+                'message' => 'Saldo Anda kurang, silakan lakukan topup.'
+            ]);
+        }
+
+        $user->money -= $total;
+        $user->save();
+
+        session()->forget('cart');
+
+        return response()->json(['status' => 'success']);
     }
 }

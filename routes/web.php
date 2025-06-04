@@ -3,7 +3,8 @@
 use App\Http\Controllers\Ccart;
 use App\Http\Controllers\Cuser;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductsController; 
+use App\Http\Controllers\CheckoutController; 
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +38,9 @@ Route::get('/menu', function () {
     return view('products.index');
 })->name('menu');
 
+Route::get('/invoice', function () {
+    return view('payment.invoice');
+})->name('invoice');
 
 // Route::get('/produk/{product}/edit', [ProductsController::class, 'edit'])->name('products.edit');
 // Route::put('/produk/{product}', [ProductsController::class, 'update'])->name('products.update');
@@ -63,3 +67,6 @@ Route::get('/cart/data', [Ccart::class, 'getCart']);
 Route::post('/cart/add', [Ccart::class, 'add']);
 Route::post('/cart/update', [Ccart::class, 'update']);
 Route::post('/cart/remove', [Ccart::class, 'remove']);
+
+Route::get('/invoice', [Ccart::class, 'showInvoice'])->name('invoice');
+Route::middleware('auth:sanctum')->post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
